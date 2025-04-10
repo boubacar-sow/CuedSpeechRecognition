@@ -213,7 +213,7 @@ def main(args: argparse.Namespace) -> None:
     best_val_metric = float('inf')
     logging.info(f"Starting training for {args.num_epochs - start_epoch} epochs...")
     for epoch in range(start_epoch, args.num_epochs):
-        train_loss = train_epoch(model, train_loader, vocab, optimizer, device, args.mode, args.loss_alpha)
+        train_loss = train_epoch(model, train_loader, vocab, optimizer, device, args.loss_alpha)
         logging.info(f'Epoch {epoch+1}/{args.num_epochs} - Train Loss: {train_loss:.4f}')
         
         val_metrics = validate(model, val_loader, device, args.mode, vocab)
@@ -254,11 +254,11 @@ def main(args: argparse.Namespace) -> None:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Train Cued Speech Recognition Model')
     
-    parser.add_argument('--train_features_dir', type=str, default='data/training_features', help='Directory for training features')
-    parser.add_argument('--train_labels_dir', type=str, default='data/train_labels', help='Directory for training labels')
-    parser.add_argument('--val_features_dir', type=str, default='data/val_features', help='Directory for validation features')
-    parser.add_argument('--val_labels_dir', type=str, default='data/val_labels', help='Directory for validation labels')
-    parser.add_argument('--vocab_path', type=str, default='data/vocab.txt', help='Path to vocabulary file')
+    parser.add_argument('--train_features_dir', type=str, default='../data/training_features', help='Directory for training features')
+    parser.add_argument('--train_labels_dir', type=str, default='../data/train_labels', help='Directory for training labels')
+    parser.add_argument('--val_features_dir', type=str, default='../data/val_features', help='Directory for validation features')
+    parser.add_argument('--val_labels_dir', type=str, default='../data/val_labels', help='Directory for validation labels')
+    parser.add_argument('--vocab_path', type=str, default='/pasteur/appa/homes/bsow/ACSR_github/data/vocab.txt', help='Path to vocabulary file')
     parser.add_argument('--hidden_dim', type=int, default=128, help='Hidden dimension size for encoder/decoder')
     parser.add_argument('--n_layers', type=int, default=2, help='Number of layers for GRUs')
     parser.add_argument('--mode', type=str, choices=['phoneme', 'syllable'], default="syllable", help='Training mode: phoneme or syllable level')
@@ -267,9 +267,9 @@ if __name__ == '__main__':
     parser.add_argument('--learning_rate', type=float, default=1e-4, help='Learning rate for Adam optimizer')
     parser.add_argument('--loss_alpha', type=float, default=0.2, help='Weight for CTC loss in joint loss (1-alpha for Attention loss)')
     parser.add_argument('--num_workers', type=int, default=6, help='Number of workers for DataLoader')
-    parser.add_argument('--checkpoint_dir', type=str, default='checkpoints', help='Directory to save checkpoints')
-    parser.add_argument('--checkpoint_path', type=str, default='checkpoints/best_model.pt', help='Path to load a checkpoint to resume training')
-    parser.add_argument('--log_dir', type=str, default='logs', help='Directory to save logs')
+    parser.add_argument('--checkpoint_dir', type=str, default='../checkpoints', help='Directory to save checkpoints')
+    parser.add_argument('--checkpoint_path', type=str, default=None, help='Path to load a checkpoint to resume training')
+    parser.add_argument('--log_dir', type=str, default='../logs', help='Directory to save logs')
     
     args = parser.parse_args()
     
