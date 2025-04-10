@@ -84,15 +84,6 @@ python src/test.py \
     --checkpoint_path checkpoints/best_model.pt
 ```
 
-### Decoding
-
-```bash
-python src/decoding.py \
-    --input_video path/to/video.mp4 \
-    --checkpoint_path checkpoints/best_model.pt \
-    --vocab_path data/vocab.txt \
-    --output_file decoded_transcript.txt
-```
 
 ## Model Architecture
 
@@ -120,10 +111,10 @@ If you use this code or refer to our work in your research, please cite our pape
 
 ```bibtex
 @article{sow2024automated,
-  title={Automated Recognition of French Cued Speech Using Joint Multimodal Learning},
+  title={Nothing for the moment},
   author={Sow, Boubacar},
   journal={},
-  year={2024},
+  year={2025},
   publisher={}
 }
 ```
@@ -135,6 +126,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - [Institut Pasteur](https://www.pasteur.fr/) for infrastructure support
+- [ENS](https://www.ens.fr/) for infrastructure support
 - Funding agencies and grants that supported this research
 - Open-source libraries and tools used in this implementation
 
