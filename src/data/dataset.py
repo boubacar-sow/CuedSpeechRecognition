@@ -33,6 +33,7 @@ class CuedSpeechDataset(Dataset):
         
         # Load data
         self.data = self._load_data()
+        print("Index of the blank token: ", self.vocab['<UNK>'])
     
     def _load_data(self) -> List[Dict]:
         """Load and preprocess data."""
@@ -45,7 +46,7 @@ class CuedSpeechDataset(Dataset):
             raise FileNotFoundError(f"Labels directory not found: {self.labels_dir}")
             
         feature_files = [f for f in os.listdir(self.features_dir) 
-                        if f.endswith('_features.csv') and 'sent_' not in f]
+                        if f.endswith('_features.csv') and 'sent' not in f]
         for feature_file in sorted(feature_files):
             base_name = feature_file.replace('_features.csv', '')
             
@@ -172,7 +173,7 @@ def collate_fn(batch: List[Tuple]) -> Tuple[torch.Tensor, ...]:
     return hand_shapes_padded, hand_positions_padded, lips_padded, labels_padded
 
 def create_dataloader(features_dir: str, labels_dir: str, mode: str = 'train',
-                     batch_size: int = 32, shuffle: bool = True,
+                     batch_size: int = 16, shuffle: bool = True,
                      num_workers: int = 4, vocab: Dict[str, int] = None) -> DataLoader:
     """
     Create a DataLoader for the dataset.

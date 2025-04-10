@@ -94,7 +94,6 @@ def validate(model: nn.Module, dataloader: DataLoader,
     predictions = []
     targets = []
     blank_idx = next((idx for token, idx in vocab.items() if token == '<UNK>'), None)
-
     with torch.no_grad():
         for batch in tqdm(dataloader, desc='Validation', disable=True):
             hand_shape = batch[0].to(device)
@@ -109,8 +108,8 @@ def validate(model: nn.Module, dataloader: DataLoader,
             predictions.extend(decoded_seqs)
             targets.extend(batch_targets.cpu().numpy().tolist())
     idx_to_token = {idx: token for token, idx in vocab.items()}
-    pred_tokens = [[idx_to_token[idx] for idx in seq if idx != 1] for seq in predictions]
-    target_tokens = [[idx_to_token[idx] for idx in seq if idx != 1] for seq in targets]
+    pred_tokens = [[idx_to_token[idx] for idx in seq if idx != blank_idx] for seq in predictions]
+    target_tokens = [[idx_to_token[idx] for idx in seq if idx != blank_idx] for seq in targets]
     
     metrics = {}
     
@@ -120,10 +119,10 @@ def validate(model: nn.Module, dataloader: DataLoader,
         metrics['accuracy'] = 1 - per
     
     elif mode == 'syllable':
-        cer = calculate_cer(pred_tokens, target_tokens)
-        ser = calculate_per(pred_tokens, target_tokens)
         print("True syllables: ", target_tokens[:5])
         print("decoded syllables: ", pred_tokens[:5])
+        cer = calculate_cer(pred_tokens, target_tokens)
+        ser = calculate_per(pred_tokens, target_tokens)
         ger = calculate_gesture_accuracy(pred_tokens, target_tokens)
         
         metrics['cer'] = cer
@@ -159,6 +158,7 @@ def main(args: argparse.Namespace) -> None:
             mode=args.mode,
             vocab=vocab
         )
+        
     except FileNotFoundError as e:
         logging.error(f"Error loading data: {e}. Please check feature/label directories.")
         return
@@ -200,7 +200,7 @@ def main(args: argparse.Namespace) -> None:
         n_layers=args.n_layers
     ).to(device)
     
-    optimizer = optim.Adam(model.parameters(), lr=args.learning_rate)
+    optimizer = optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=1e-5)
     
     start_epoch = 0
     if args.checkpoint_path and os.path.exists(args.checkpoint_path):
@@ -264,7 +264,7 @@ if __name__ == '__main__':
     parser.add_argument('--mode', type=str, choices=['phoneme', 'syllable'], default="syllable", help='Training mode: phoneme or syllable level')
     parser.add_argument('--batch_size', type=int, default=16, help='Batch size for training')
     parser.add_argument('--num_epochs', type=int, default=3000, help='Number of training epochs')
-    parser.add_argument('--learning_rate', type=float, default=1e-4, help='Learning rate for Adam optimizer')
+    parser.add_argument('--learning_rate', type=float, default=1e-3, help='Learning rate for Adam optimizer')
     parser.add_argument('--loss_alpha', type=float, default=0.2, help='Weight for CTC loss in joint loss (1-alpha for Attention loss)')
     parser.add_argument('--num_workers', type=int, default=6, help='Number of workers for DataLoader')
     parser.add_argument('--checkpoint_dir', type=str, default='../checkpoints', help='Directory to save checkpoints')

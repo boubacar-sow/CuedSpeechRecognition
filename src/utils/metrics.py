@@ -15,8 +15,9 @@ def calculate_per(predictions: List[List[str]], targets: List[List[str]]) -> flo
         PER value
     """
     # Convert sequences to space-separated strings
-    pred_str = [' '.join(pred) for pred in predictions]
-    target_str = [' '.join(target) for target in targets]
+    
+    pred_str = [" ".join([char for char in seq ]) for seq in predictions]
+    target_str = [" ".join([char for char in seq ]) for seq in targets]
     
     # Calculate PER using jiwer
     per = jiwer.wer(target_str, pred_str)
@@ -34,13 +35,11 @@ def calculate_cer(predictions: List[List[str]], targets: List[List[str]]) -> flo
         CER value
     """
     # Convert sequences to strings
-    pred_phonemes = [syllables_to_phonemes(pred) for pred in predictions]
-    target_phonemes = [syllables_to_phonemes(target) for target in targets]
-    pred_str = [' '.join(pred) for pred in pred_phonemes]
-    target_str = [' '.join(target) for target in target_phonemes]
+    pred_phonemes = [" ".join([char for char in syllables_to_phonemes(seq)]) for seq in predictions]
+    target_phonemes = [" ".join([char for char in syllables_to_phonemes(seq)]) for seq in targets]
     
     # Calculate CER using jiwer
-    cer = jiwer.wer(target_str, pred_str)
+    cer = jiwer.wer(target_phonemes, pred_phonemes)
     return cer
 
 def calculate_gesture_accuracy(predictions: List[List[str]], targets: List[List[str]]) -> float:

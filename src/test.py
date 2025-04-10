@@ -274,7 +274,8 @@ def main(args: argparse.Namespace) -> None:
         return
     logging.info(f"Loading checkpoint from: {args.checkpoint_path}")
     checkpoint = torch.load(args.checkpoint_path, map_location=device)
-    model.load_state_dict(checkpoint)
+    model.load_state_dict(checkpoint['model_state_dict'])
+
     logging.info(f"Loaded model from epoch {checkpoint.get('epoch', 'N/A')}")
 
     logging.info("--- Evaluating with Regular (Greedy) CTC Decoding ---")
@@ -330,9 +331,9 @@ def main(args: argparse.Namespace) -> None:
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Test Cued Speech Recognition Model')
     
-    parser.add_argument('--test_features_dir', type=str, default='/pasteur/appa/homes/bsow/ACSR/ACSR/data/testing_features', help='Directory for test features')
-    parser.add_argument('--test_labels_dir', type=str, default='/pasteur/appa/homes/bsow/ACSR/ACSR/data/test_labels', help='Directory for test labels')
-    parser.add_argument('--vocab_path', type=str, default='/pasteur/appa/homes/bsow/ACSR/data/french_dataset/vocab.txt', help='Path to vocabulary file')
+    parser.add_argument('--test_features_dir', type=str, default='../data/testing_features', help='Directory for test features')
+    parser.add_argument('--test_labels_dir', type=str, default='../data/test_labels', help='Directory for test labels')
+    parser.add_argument('--vocab_path', type=str, default='../data/vocab.txt', help='Path to vocabulary file')
     parser.add_argument('--hidden_dim', type=int, default=128, help='Hidden dimension size for encoder/decoder')
     parser.add_argument('--n_layers', type=int, default=2, help='Number of layers for GRUs')
     parser.add_argument('--mode', type=str, choices=['phoneme', 'syllable'], default="syllable", help='Testing mode: phoneme or syllable level')
@@ -341,9 +342,9 @@ if __name__ == '__main__':
     parser.add_argument('--alpha', type=float, default=0.5, help='Weight for the LM score')
     parser.add_argument('--beta', type=float, default=1.0, help='Word bonus exponent')
     parser.add_argument('--num_workers', type=int, default=4, help='Number of workers for DataLoader')
-    parser.add_argument('--lm_path', type=str, default='/pasteur/appa/homes/bsow/ACSR/data/french_dataset/french_ipa.binary', help='Path to the KenLM language model binary file')
-    parser.add_argument('--checkpoint_path', type=str, default='/pasteur/appa/homes/bsow/ACSR/src/acsr/saved_models/gridsearch/new_feat_acsr_0.001_0.5_128_2_adam.pt', help='Path to the model checkpoint file (.pt)')
-    parser.add_argument('--log_dir', type=str, default='/pasteur/appa/homes/bsow/ACSR/ACSR/logs', help='Directory to save logs')
+    parser.add_argument('--lm_path', type=str, default='../data/french_ipa.binary', help='Path to the KenLM language model binary file')
+    parser.add_argument('--checkpoint_path', type=str, default='../checkpoints/best_model.pt', help='Path to the model checkpoint file (.pt)')
+    parser.add_argument('--log_dir', type=str, default='../logs', help='Directory to save logs')
     
     args = parser.parse_args()
     
