@@ -1,0 +1,91 @@
+[project]
+name = "acsr-github"
+version = "0.1.0"
+description = "French Cued Speech Decoding"
+authors = [
+    {name = "Boubacar Sow"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11"
+
+[tool.poetry.dependencies]
+python = "3.11.5"
+keras = "^3.7.0"
+matplotlib = "^3.10.0"
+praat-textgrids = "^1.4.0"
+tqdm = "^4.67.1"
+opencv-python = "^4.10.0.84"
+flake8 = "^7.1.1"
+isort = "^5.13.2"
+pytest = "^8.3.4"
+pyscaffold = "^4.6"
+setuptools = "^75.6.0"
+numpy = "1.26.4"
+mediapipe = "0.10.5"
+tox = "^4.23.2"
+jiwer = "^3.0.5"
+levenshtein = "^0.26.1"
+phonemizer = "^3.3.0"
+text2ipa = "^2.1.2"
+epitran = "^1.25.1"
+eng-to-ipa = "^0.0.2"
+pyproject-hooks = "1.0.0"
+nltk = "^3.9.1"
+jupyter = "^1.1.1"
+jupyterlab = "^4.3.4"
+moviepy = "1.0.3"
+openai-whisper = "^20240930"
+imageio = "^2.36.1"
+webrtcvad = "^2.0.10"
+pgvector = "^0.3.6"
+pynini = "^2.1.6.post1"
+hdbscan = "^0.8.40"
+sox = "^1.5.0"
+speechbrain = "^1.0.2"
+librosa = "^0.10.2.post1"
+pandas = ">=1.4,<2.0"
+scikit-learn = "^1.6.1"
+praatio = "^6.2.0"
+scikit-image = "^0.25.0"
+noisereduce = "^3.0.3"
+wandb = "^0.19.4"
+huggingface-hub = "^0.28.0"
+flashlight-text = "^0.0.7"
+kenlm = "^0.2.0"
+conformer = "^0.3.2"
+pytorch-gpu = "^0.0.1"
+myst-parser = "^4.0.1"
+seaborn = "^0.13.2"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
+
+
+[[tool.poetry.source]]
+name = "pytorch_cuda"
+url = "https://download.pytorch.org/whl/cu118"
+priority = "explicit"
+
+
+[[tool.poetry.source]]
+name = "pytorch-gpu"
+url = "https://download.pytorch.org/whl/cu118"
+priority = "explicit"
+
+
+[[tool.poetry.source]]
+name = "pytorch_gpu"
+url = "https://download.pytorch.org/whl/cu118"
+priority = "explicit"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.extras]
+testing = ["pytest", "sphinx", "torch", "pandas", "jiwer"]
+
+[tool.poetry]
+package-mode = false
