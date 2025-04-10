@@ -291,9 +291,9 @@ def main(args: argparse.Namespace) -> None:
     if args.mode == 'phoneme':
         logging.info(f"Regular Decoding - CER: {regular_metrics.get('cer', float('nan')):.4f}")
     else:
-        logging.info(f"Regular Decoding - CER: {regular_metrics.get('cer', float('nan')):.4f}")
-        logging.info(f"Regular Decoding - SER: {regular_metrics.get('ser', float('nan')):.4f}")
-        logging.info(f"Regular Decoding - GER: {regular_metrics.get('ger', float('nan')):.4f}")
+        logging.info(f"Regular Decoding - CER: {regular_metrics.get('cer', float('nan')):.4f} / 1-CER: {1-regular_metrics.get('cer', float('nan')):.4f}")
+        logging.info(f"Regular Decoding - SER: {regular_metrics.get('ser', float('nan')):.4f} / 1-SER: {1-regular_metrics.get('ser', float('nan')):.4f}")
+        logging.info(f"Regular Decoding - GER: {regular_metrics.get('ger', float('nan')):.4f} / 1-GER: {1-regular_metrics.get('ger', float('nan')):.4f}")
     
     logging.info("--- Evaluating with Prefix Beam Search CTC Decoding ---")
     beam_metrics = evaluate_model(
