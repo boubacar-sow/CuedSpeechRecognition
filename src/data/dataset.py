@@ -80,7 +80,7 @@ class CuedSpeechDataset(Dataset):
                                 numeric_labels.append(self.vocab[label])
                             else:
                                 # Use a default index for unknown tokens
-                                numeric_labels.append(self.vocab.get('<UNK>', 0))
+                                numeric_labels.append(self.vocab['<UNK>'])
                                 print("should not happen: ", label, " , ", base_name)
                         else:
                             numeric_labels.append(label)
@@ -123,6 +123,7 @@ class CuedSpeechDataset(Dataset):
                 # If no vocab provided, use a simple mapping
                 label_map = {label: i for i, label in enumerate(set(labels))}
                 labels = [label_map[label] for label in labels]
+                print("should not happen")
         
         return (
             torch.FloatTensor(sample['hand_shape']),
@@ -165,7 +166,7 @@ def collate_fn(batch: List[Tuple]) -> Tuple[torch.Tensor, ...]:
     labels_padded = pad_sequence(
         labels,
         batch_first=True,
-        padding_value=1  # Use 0 as padding for labels
+        padding_value=1  # Use  as padding for labels
     )
     
     return hand_shapes_padded, hand_positions_padded, lips_padded, labels_padded
