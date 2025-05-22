@@ -125,6 +125,7 @@ These streams are combined through a fusion mechanism before being processed by 
 | VJ      |  14  |  31  |
 | VT      |   5  |  31  |
 | YB      |      |  28  |
+| Total   | 1526 | 394  |
 
 ## Results
 
