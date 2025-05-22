@@ -95,6 +95,37 @@ Our system employs a three-stream fusion architecture:
 
 These streams are combined through a fusion mechanism before being processed by a joint CTC-Attention decoder that produces the final output sequence.
 
+## Dataset
+
+| Speaker | Sent | Word |
+| :------ | :--: | :--: |
+| CSF22   | 1087 |      |
+| Sarre et. al.  | 100  |   |
+| XX      |  50  |      |
+| AM      |  10  |  30  |
+| CH      |  21  |  29  |
+| ED      |  14  |      |
+| EM      |      |  31  |
+| FB      |  10  |  31  |
+| FL      |   9  |      |
+| HH      |   7  |      |
+| JO      |  11  |      |
+| LB      |  14  |  32  |
+| LM      |  24  |      |
+| LV      |  32  |  32  |
+| LW      |   9  |  29  |
+| LY      |  10  |      |
+| MF      |   5  |      |
+| ML      |  16  |      |
+| MZ      |  19  |  26  |
+| NG      |  23  |  32  |
+| PG      |  12  |  32  |
+| PM      |  13  |      |
+| RJ      |  11  |      |
+| VJ      |  14  |  31  |
+| VT      |   5  |  31  |
+| YB      |      |  28  |
+
 ## Results
 
 Our model achieves the following performance metrics on the test set:
